@@ -4,6 +4,7 @@ import { getBlogPosts } from '../api/data-service-api-client';
 import { BlogPost } from '../types/BlogPost';
 import Link from 'next/link';
 import ReactMarkdown from "react-markdown";
+import {toTitleCase} from "../utils/utils";
 
 const BlogPostList: React.FC = () => {
     const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
@@ -42,7 +43,7 @@ const BlogPostList: React.FC = () => {
                         <div key={post.title} style={{ marginBottom: '2rem' }}>
                             <Link href={`/posts/${encodeURIComponent(post.title)}`}>
                                 <Typography variant="h4" component="h2" gutterBottom>
-                                    {post.title}
+                                    {toTitleCase(post.title)}
                                 </Typography>
                                 <ReactMarkdown>
                                     {post.description}
