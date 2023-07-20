@@ -41,6 +41,13 @@ const BlogPostList: React.FC = () => {
                             <Typography variant="h4" component="h2" gutterBottom>
                                 {post.title}
                             </Typography>
+                            <Typography variant="subtitle1" component="h2" gutterBottom>
+                                {post.title}
+                            </Typography>
+                            <Typography variant="subtitle1" gutterBottom>
+                                {post.description}
+                            </Typography>
+
                         </div>
                     ))}
                 </>
