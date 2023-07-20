@@ -6,7 +6,7 @@ export default function Sitemap() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const xml = generateSiteMap();
+    const xml = await generateSiteMap();
     ctx.res.setHeader('Content-Type', 'text/xml');
     ctx.res.write(xml);
     ctx.res.end();
@@ -27,6 +27,5 @@ async function generateSiteMap(): Promise<string> {
             `;
         })
         .join('')}
-    </urlset>`
-      ;
+    </urlset>`;
 }
