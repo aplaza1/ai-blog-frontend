@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { CircularProgress, Container, Typography } from '@mui/material';
 import { getBlogPosts } from '../api/data-service-api-client';
 import { BlogPost } from '../types/BlogPost';
+import Link from 'next/link';
+import ReactMarkdown from "react-markdown";
 
 const BlogPostList: React.FC = () => {
     const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
@@ -38,12 +40,14 @@ const BlogPostList: React.FC = () => {
                 <>
                     {blogPosts.map((post) => (
                         <div key={post.title} style={{ marginBottom: '2rem' }}>
-                            <Typography variant="h4" component="h2" gutterBottom>
-                                {post.title}
-                            </Typography>
-                            <Typography variant="subtitle1" gutterBottom>
-                                {post.description}
-                            </Typography>
+                            <Link href={`/posts/${encodeURIComponent(post.title)}`}>
+                                <Typography variant="h4" component="h2" gutterBottom>
+                                    {post.title}
+                                </Typography>
+                                <ReactMarkdown>
+                                    {post.description}
+                                </ReactMarkdown>
+                            </Link>
 
                         </div>
                     ))}
