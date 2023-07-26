@@ -1,8 +1,5 @@
-// components/Layout.tsx
-
 import React, {ReactNode} from 'react';
 import NavBar from './NavBar';
-import {createTheme, ThemeProvider} from "@mui/material";
 
 interface LayoutProps {
     children: ReactNode;
