@@ -7,14 +7,12 @@ export const RootContainer = styled(Box)({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    padding: '2rem'
 });
 
 export const PaperStyled = styled(Paper)({
     width: '80%',
     maxWidth: '800px',
     padding: '2rem',
-    marginTop: '2rem',
 });
 
 export const TitleTypography = styled(Typography)(({ theme }) => ({
