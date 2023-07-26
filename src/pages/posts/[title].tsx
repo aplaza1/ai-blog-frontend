@@ -25,7 +25,9 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 const BlogPostPage: FC<Props> = ({ blogPost }) => (
     <RootContainer>
         <Head>
-            <title>{blogPost.title}</title>
+            <title>{toTitleCase(blogPost.title)}</title>
+            <meta name="description" content={blogPost.description} />
+            <meta name="keywords" content={blogPost.keywords.toString()} />
         </Head>
         <PaperStyled>
             <TitleTypography variant="h3" align="center">
