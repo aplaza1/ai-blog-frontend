@@ -5,10 +5,13 @@ import { ParsedUrlQuery } from 'querystring';
 import { BlogPost } from '../../types/BlogPost';
 import { getBlogPost } from '../../api/data-service-api-client'
 import ReactMarkdown from 'react-markdown';
-import { Box} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import { RootContainer, PaperStyled, TitleTypography, MarkdownContainer } from '../../styles/BlogPostStyles';
 import {toTitleCase} from "../../utils/utils";
 import Layout from "../../components/Layout";
+import {CodeProps, Components} from "react-markdown/lib/ast-to-react";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 interface Props {
     blogPost: BlogPost;
@@ -23,6 +26,27 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     return { props: { blogPost } };
 };
 
+const components: Components = {
+    code({node, inline, className, children, ...props}: CodeProps) {
+        const match = /language-(\w+)/.exec(className || '')
+
+        return !inline && match ? (
+            <SyntaxHighlighter
+                language={match[1]}
+                PreTag="div"
+                {...props}
+                style={oneDark}
+            >
+                {String(children).replace(/\n$/, '')}
+            </SyntaxHighlighter>
+        ) : (
+            <code className={className} {...props}>
+                {children}
+            </code>
+        )
+    }
+}
+
 const BlogPostPage: FC<Props> = ({ blogPost }) => (
     <Layout>
         <RootContainer>
@@ -32,12 +56,14 @@ const BlogPostPage: FC<Props> = ({ blogPost }) => (
                 <meta name="keywords" content={blogPost.keywords.toString()} />
             </Head>
             <PaperStyled>
-                <TitleTypography variant="h3" align="center">
+                <TitleTypography variant="h3">
                     {toTitleCase(blogPost.title)}
                 </TitleTypography>
                 <Box sx={{ my: 4 }}>
                     <MarkdownContainer>
-                        <ReactMarkdown children={blogPost.content} />
+                        <Typography variant="body1" component="div">
+                            <ReactMarkdown components={components} children={blogPost.content} />
+                        </Typography>
                     </MarkdownContainer>
                 </Box>
             </PaperStyled>
