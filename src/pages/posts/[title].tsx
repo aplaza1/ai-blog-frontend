@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import { Box} from '@mui/material';
 import { RootContainer, PaperStyled, TitleTypography, MarkdownContainer } from '../../styles/BlogPostStyles';
 import {toTitleCase} from "../../utils/utils";
+import Layout from "../../components/Layout";
 
 interface Props {
     blogPost: BlogPost;
@@ -23,23 +24,25 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 };
 
 const BlogPostPage: FC<Props> = ({ blogPost }) => (
-    <RootContainer>
-        <Head>
-            <title>{toTitleCase(blogPost.title)}</title>
-            <meta name="description" content={blogPost.description} />
-            <meta name="keywords" content={blogPost.keywords.toString()} />
-        </Head>
-        <PaperStyled>
-            <TitleTypography variant="h3" align="center">
-                {toTitleCase(blogPost.title)}
-            </TitleTypography>
-            <Box sx={{ my: 4 }}>
-                <MarkdownContainer>
-                    <ReactMarkdown children={blogPost.content} />
-                </MarkdownContainer>
-            </Box>
-        </PaperStyled>
-    </RootContainer>
+    <Layout>
+        <RootContainer>
+            <Head>
+                <title>{toTitleCase(blogPost.title)}</title>
+                <meta name="description" content={blogPost.description} />
+                <meta name="keywords" content={blogPost.keywords.toString()} />
+            </Head>
+            <PaperStyled>
+                <TitleTypography variant="h3" align="center">
+                    {toTitleCase(blogPost.title)}
+                </TitleTypography>
+                <Box sx={{ my: 4 }}>
+                    <MarkdownContainer>
+                        <ReactMarkdown children={blogPost.content} />
+                    </MarkdownContainer>
+                </Box>
+            </PaperStyled>
+        </RootContainer>
+    </Layout>
 );
 
 export default BlogPostPage;
